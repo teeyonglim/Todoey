@@ -10,14 +10,16 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
-    
-   let defaults = UserDefaults.standard
+    var item = Item()
+   
+    var itemArray = [Item]()
+   
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
+        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
             itemArray = items
             
         }
@@ -33,15 +35,13 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
-        cell.textLabel?.text = itemArray[indexPath.row]
+        cell.textLabel?.text = itemArray[indexPath.row].title
         return cell
         
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // print(indexPath.row)
-      //  print(itemArray[indexPath.row])
-        
+       
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark
         {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
@@ -65,7 +65,12 @@ class TodoListViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New Todoey Items", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            self.itemArray.append(textField.text!)
+           
+            let newItem = Item()
+            
+            newItem.title = textField.text!
+            
+            self.itemArray.append(newItem)
             
             self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             
