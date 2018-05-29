@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: UITableViewController{
 
     var itemArray = [Item]()
 
@@ -22,24 +22,7 @@ class TodoListViewController: UITableViewController {
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-//        let newItem = Item()
-//        newItem.title = "Find Mike"
-//        itemArray.append(newItem)
-//
-//        let newItem1 = Item()
-//        newItem1.title = "Buy Eggos"
-//        itemArray.append(newItem1)
-//
-//        let newItem2 = Item()
-//        newItem2.title = "Destroy Dongky Kong"
-//        itemArray.append(newItem2)
-//
-     //   if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
-     //       itemArray = items
-            
-      //  }
-        
-      //  loadItems()
+        loadItems()
     }
 
     //Tableview Datasource Methods
@@ -48,7 +31,6 @@ class TodoListViewController: UITableViewController {
     }
     
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
@@ -58,13 +40,11 @@ class TodoListViewController: UITableViewController {
         
         cell.accessoryType = item.done ? .checkmark : .none
         
-        
         return cell
         
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
        
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
@@ -93,18 +73,7 @@ class TodoListViewController: UITableViewController {
             
             self.itemArray.append(newItem)
           
-//            let encoder = PropertyListEncoder()
-//
-//
-//            do {
-//                let data = try encoder.encode(self.itemArray)
-//                try data.write(to: self.dataFilePath!)
-//            } catch
-//            {
-//                print("Error encoding item array, \(error)")
-//            }
-//
-           self.tableView.reloadData()
+            self.tableView.reloadData()
             
             self.saveItem()
             
@@ -123,7 +92,6 @@ class TodoListViewController: UITableViewController {
     func saveItem()
     {
         
-        
         do {
             try context.save()
             
@@ -136,22 +104,48 @@ class TodoListViewController: UITableViewController {
         
     }
     
-    func loadItems(){
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    //    let request:  NSFetchRequest<Item> = Item.fetchRequest()
+
+        do{
+            itemArray = try context.fetch(request)
+        }catch
+        {
+            print("error fetching data from context, \(error)")
+        }
         
-//        if let data = try? Data(contentsOf: dataFilePath!){
-//         let decoder = PropertyListDecoder()
-//
-//            do {
-//                itemArray = try decoder.decode([Item].self, from: data)
-//            }
-//            catch{
-//                print("Error decoding item, \(error)")
-//            }
-//
-//        }
-        
+        tableView.reloadData()
     }
     
 }
 
+//MARK: - Search Bar methods
 
+extension TodoListViewController: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+   
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+   
+        request.sortDescriptors = [sortDescriptor]
+       
+        loadItems(with: request)
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            DispatchQueue.main.async{
+                searchBar.resignFirstResponder()
+            }
+        }
+        
+    }
+    
+}
