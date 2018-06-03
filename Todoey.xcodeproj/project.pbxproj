@@ -13,6 +13,7 @@
 		F4410D8220B3E3BD008D150D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4410D8120B3E3BD008D150D /* Assets.xcassets */; };
 		F4410D8520B3E3BD008D150D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4410D8320B3E3BD008D150D /* LaunchScreen.storyboard */; };
 		F4640BFD20BB61930009EBF0 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4640BFB20BB61930009EBF0 /* DataModel.xcdatamodeld */; };
+		F4E4B76F20BCDC9E0055155B /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E4B76E20BCDC9D0055155B /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		F4410D8420B3E3BD008D150D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4410D8620B3E3BD008D150D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4640BFC20BB61930009EBF0 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		F4E4B76E20BCDC9D0055155B /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 		F492019420BA1E9200FB4B3E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F4E4B76E20BCDC9D0055155B /* CategoryViewController.swift */,
 				F4410D7C20B3E3B7008D150D /* TodoListViewController.swift */,
 			);
 			path = Controllers;
@@ -173,6 +176,7 @@
 				F4410D7D20B3E3B7008D150D /* TodoListViewController.swift in Sources */,
 				F4640BFD20BB61930009EBF0 /* DataModel.xcdatamodeld in Sources */,
 				F4410D7B20B3E3B7008D150D /* AppDelegate.swift in Sources */,
+				F4E4B76F20BCDC9E0055155B /* CategoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
